@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WIRECARD_BXML>
+  <W_REQUEST>
+    <W_JOB>
+      <BusinessCaseSignature>test</BusinessCaseSignature>
+      <FNC_CC_AUTHORIZATION>
+        <FunctionID>Test dummy FunctionID</FunctionID>
+      </FNC_CC_AUTHORIZATION>
+    </W_JOB>
+  </W_REQUEST>
+</WIRECARD_BXML>
