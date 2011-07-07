@@ -1,9 +1,8 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 
-require 'active_payment'
-require 'rspec'
-require "factory_girl"
+require "active_payment"
+require "rspec"
 require "forgery"
 
 FIXTURES_PATH = "#{File.dirname(__FILE__)}/fixtures"

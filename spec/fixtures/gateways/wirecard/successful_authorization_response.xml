@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WIRECARD_BXML xmlns:xsi="http://www.w3.org/1999/XMLSchema-instance" xsi:noNamespaceSchemaLocation="wirecard.xsd">
+  <W_RESPONSE>
+    <W_JOB>
+      <JobID>test dummy data</JobID>
+      <FNC_CC_AUTHORIZATION>
+        <FunctionID>Wirecard remote test purchase</FunctionID>
+        <CC_TRANSACTION>
+          <TransactionID>1</TransactionID>
+          <PROCESSING_STATUS>
+            <GuWID>C822580121385121429927</GuWID>
+            <AuthorizationCode>709678</AuthorizationCode>
+            <Info>THIS IS A DEMO TRANSACTION USING CREDIT CARD NUMBER 420000****0000. NO REAL MONEY WILL BE
+              TRANSFERED.
+            </Info>
+            <StatusType>INFO</StatusType>
+            <FunctionResult>ACK</FunctionResult>
+            <TimeStamp>2008-06-19 06:53:33</TimeStamp>
+          </PROCESSING_STATUS>
+        </CC_TRANSACTION>
+      </FNC_CC_AUTHORIZATION>
+    </W_JOB>
+  </W_RESPONSE>
+</WIRECARD_BXML>

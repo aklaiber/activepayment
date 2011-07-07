@@ -44,22 +44,12 @@ module ActivePayment
 
       private
 
-      Symbol.class_eval do
-        define_method :to_element_name do
-          if self.to_s.match('[0-9]')
-            self.to_s.upcase
-          else
-            self.to_s.camelize.gsub('Id', 'ID')
-          end
-        end
-      end
-
       def compulsory_element(name, default_value)
         if transaction_params.include?(name) && !transaction_params[name].blank?
-          xml.tag! name.to_element_name, transaction_params[name]
+          xml.tag! name.to_node_name, transaction_params[name]
           transaction_params.delete(name)
         else
-          xml.tag! name.to_element_name, default_value
+          xml.tag! name.to_node_name, default_value
         end
       end
 
@@ -70,7 +60,7 @@ module ActivePayment
               build_transaction_element(value)
             end
           else
-            xml.tag! element_name.to_element_name, value
+            xml.tag! element_name.to_node_name, value
           end
         end
       end
@@ -113,8 +103,7 @@ module ActivePayment
               request.body = xml
               response = http.request(request)
               if response
-                #puts response
-                #return WirecardMapper::Response.new(response.body)
+                return Response.new(response.body)
               end
             end
           end

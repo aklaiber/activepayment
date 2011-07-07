@@ -21,7 +21,7 @@ describe ActivePayment::Gateway::Wirecard do
   end
 
   it "should post authorization request" do
-    gateway.authorization(credit_card_hash)
+    response = gateway.authorization(credit_card_hash)
   end
 
 end
