@@ -1,3 +1,4 @@
+$LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 
 require 'active_payment'
@@ -6,12 +7,12 @@ require 'factory_girl'
 
 FIXTURES_PATH = "#{File.dirname(__FILE__)}/fixtures"
 
-RSpec.configure do |c|
-
+RSpec.configure do |config|
+  config.mock_framework = :rspec
 end
 
-def credit_card(number = '4242424242424242', options = {})
-  defaults = {
+def credit_card(number = '4200000000000000', options = {})
+  {
       :number => number,
       :month => 9,
       :year => Time.now.year + 1,

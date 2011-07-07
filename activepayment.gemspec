@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'nokogiri'
   s.add_dependency 'builder'
   s.add_dependency 'money'
+  s.add_dependency 'uuid'
 
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'factory_girl'
