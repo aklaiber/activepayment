@@ -14,7 +14,7 @@
           <CountryCode>DE</CountryCode>
           <CREDIT_CARD_DATA>
             <CreditCardNumber>4200000000000000</CreditCardNumber>
-            <Cvc2>001</Cvc2>
+            <CVC2>001</CVC2>
             <ExpirationYear>2009</ExpirationYear>
             <ExpirationMonth>01</ExpirationMonth>
             <CardHolderName>John Doe</CardHolderName>

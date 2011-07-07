@@ -23,14 +23,7 @@ describe ActivePayment::Gateway::Wirecard do
 
   it "should build authorization request" do
     File.open("#{FIXTURES_PATH}/gateways/wirecard/authorization_request.xml") do |xml_file|
-      credit_card = {
-          :credit_card_number => 4200000000000000,
-          :cvc2 => '001',
-          :expiration_year => 2009,
-          :expiration_month => '01',
-          :card_holder_name => 'John Doe'
-      }
-      gateway.authorization_request(credit_card).should eql(xml_file.read)
+      gateway.authorization_request(credit_card_hash('4200000000000000', :expiration_year => 2009, :card_holder_name => 'John Doe')).should eql(xml_file.read)
     end
   end
 

@@ -3,7 +3,8 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 
 require 'active_payment'
 require 'rspec'
-require 'factory_girl'
+require "factory_girl"
+require "forgery"
 
 FIXTURES_PATH = "#{File.dirname(__FILE__)}/fixtures"
 
@@ -11,14 +12,12 @@ RSpec.configure do |config|
   config.mock_framework = :rspec
 end
 
-def credit_card(number = '4200000000000000', options = {})
+def credit_card_hash(number = '4200000000000000', options = {})
   {
-      :number => number,
-      :month => 9,
-      :year => Time.now.year + 1,
-      :first_name => 'Longbob',
-      :last_name => 'Longsen',
-      :verification_value => '123',
-      :type => 'visa'
+      :credit_card_number => number,
+      :cvc2 => '001',
+      :expiration_year => Time.now.year + 1,
+      :expiration_month => '01',
+      :card_holder_name => Forgery::Name.full_name
   }.update(options)
 end
