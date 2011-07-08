@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WIRECARD_BXML>
+  <W_REQUEST>
+    <W_JOB>
+      <JobID>test dummy data</JobID>
+      <BusinessCaseSignature>56501</BusinessCaseSignature>
+      <FNC_CC_AUTHORIZATION>
+        <FunctionID>Test dummy FunctionID</FunctionID>
+        <CC_TRANSACTION mode="demo">
+          <TransactionID>123</TransactionID>
+          <Currency>EUR</Currency>
+          <Amount>100</Amount>
+          <CommerceType>eCommerce</CommerceType>
+          <CountryCode>DE</CountryCode>
+          <CREDIT_CARD_DATA>
+            <CreditCardNumber>4200000000000000</CreditCardNumber>
+            <CVC2>001</CVC2>
+            <ExpirationYear>2009</ExpirationYear>
+            <ExpirationMonth>01</ExpirationMonth>
+            <CardHolderName>John Doe</CardHolderName>
+          </CREDIT_CARD_DATA>
+          <CONTACT_DATA>
+            <IPAddress>192.168.1.1</IPAddress>
+          </CONTACT_DATA>
+          <CORPTRUSTCENTER_DATA>
+            <ADDRESS>
+              <FirstName>John</FirstName>
+              <LastName>Doe</LastName>
+              <Address1>550 South Winchester blvd.</Address1>
+              <Address2>P.O. Box 850</Address2>
+              <City>San Jose</City>
+              <ZipCode>95128</ZipCode>
+              <State>CA</State>
+              <Country>US</Country>
+              <Phone>+1(202)555-1234</Phone>
+              <Email>John.Doe@email.com</Email>
+            </ADDRESS>
+          </CORPTRUSTCENTER_DATA>
+        </CC_TRANSACTION>
+      </FNC_CC_AUTHORIZATION>
+    </W_JOB>
+  </W_REQUEST>
+</WIRECARD_BXML>

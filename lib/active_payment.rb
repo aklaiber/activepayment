@@ -16,11 +16,18 @@ require "activepayment/gateways/wirecard"
 
 module ActivePayment
   class Exception < RuntimeError
-
   end
 
   Symbol.class_eval do
     define_method :to_node_name do
+      case self
+        when :ip_address
+          return 'IPAddress'
+        when :address_1
+          return 'Address1'
+        when :address_2
+          return 'Address2'
+      end
       if self.to_s.match('[0-9]')
         self.to_s.upcase
       else

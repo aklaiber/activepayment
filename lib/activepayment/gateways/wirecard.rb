@@ -47,6 +47,8 @@ module ActivePayment
           add_optional_node(xml, :commerce_type)
           add_optional_node(xml, :country_code)
           add_optional_node(xml, :credit_card_data, credit_card)
+          add_optional_node(xml, :contact_data)
+          add_optional_node(xml, :corptrustcenter_data)
         end
       end
 

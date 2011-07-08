@@ -44,6 +44,36 @@ describe ActivePayment::Gateway::Wirecard do
     end
   end
 
+  describe "with address" do
+    before(:all) do
+      gateway.transaction_params = {
+          :commerce_type => 'eCommerce',
+          :country_code => 'DE',
+          :contact_data => {:ip_address => '192.168.1.1'},
+          :corptrustcenter_data => {
+              :address => {
+                  :first_name => 'John',
+                  :last_name => 'Doe',
+                  :address_1 => '550 South Winchester blvd.',
+                  :address_2 => 'P.O. Box 850',
+                  :city => 'San Jose',
+                  :zip_code => '95128',
+                  :state => 'CA',
+                  :country => 'US',
+                  :phone => '+1(202)555-1234',
+                  :email => 'John.Doe@email.com'
+              }
+          }
+      }
+    end
+
+    it "should build authorization request" do
+      File.open("#{FIXTURES_PATH}/gateways/wirecard/authorization_request_with_address.xml") do |xml_file|
+        gateway.authorization_request(credit_card_hash('4200000000000000', :expiration_year => 2009, :card_holder_name => 'John Doe')).should eql(xml_file.read)
+      end
+    end
+  end
+
   describe "config" do
     it 'should set by methods' do
       ActivePayment::Gateway::Wirecard.login = 56501
