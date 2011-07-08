@@ -3,7 +3,8 @@ require 'spec_helper'
 describe ActivePayment::Gateway::Wirecard do
 
   let(:amount) { 100 }
-  let(:gateway) { ActivePayment::Gateway::Wirecard.new(amount) }
+  let(:gateway) { ActivePayment::Gateway::Wirecard.new(123, amount) }
+  let(:guwid) { 'C822580121385121429927' }
 
   before(:all) do
     ActivePayment::Gateway::Wirecard.login = 56501
@@ -14,9 +15,7 @@ describe ActivePayment::Gateway::Wirecard do
 
     gateway.jop_id = 'test dummy data'
     gateway.transaction_params = {
-        :transaction_id => 123,
         :commerce_type => 'eCommerce',
-        :amount => amount,
         :country_code => 'DE'
     }
   end
@@ -27,8 +26,17 @@ describe ActivePayment::Gateway::Wirecard do
     end
   end
 
-  it "should build capture request"
-  it "should build purchase request"
+  it "should build capture_authorization request" do
+    File.open("#{FIXTURES_PATH}/gateways/wirecard/capture_authorization_request.xml") do |xml_file|
+      gateway.capture_authorization_request(guwid).should eql(xml_file.read)
+    end
+  end
+
+  it "should build purchase request" do
+    File.open("#{FIXTURES_PATH}/gateways/wirecard/purchase_request.xml") do |xml_file|
+      gateway.purchase_request(credit_card_hash('4200000000000000', :expiration_year => 2009, :card_holder_name => 'John Doe')).should eql(xml_file.read)
+    end
+  end
 
   describe "config" do
     it 'should set by methods' do

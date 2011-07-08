@@ -4,7 +4,7 @@
     <W_JOB>
       <JobID>test dummy data</JobID>
       <BusinessCaseSignature>56501</BusinessCaseSignature>
-      <FNC_CC_AUTHORIZATION>
+      <FNC_CC_PURCHASE>
         <FunctionID>Test dummy FunctionID</FunctionID>
         <CC_TRANSACTION mode="demo">
           <TransactionID>123</TransactionID>
@@ -20,7 +20,7 @@
             <CardHolderName>John Doe</CardHolderName>
           </CREDIT_CARD_DATA>
         </CC_TRANSACTION>
-      </FNC_CC_AUTHORIZATION>
+      </FNC_CC_PURCHASE>
     </W_JOB>
   </W_REQUEST>
 </WIRECARD_BXML>

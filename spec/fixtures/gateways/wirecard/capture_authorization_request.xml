@@ -4,23 +4,15 @@
     <W_JOB>
       <JobID>test dummy data</JobID>
       <BusinessCaseSignature>56501</BusinessCaseSignature>
-      <FNC_CC_AUTHORIZATION>
+      <FNC_CC_CAPTURE_AUTHORIZATION>
         <FunctionID>Test dummy FunctionID</FunctionID>
         <CC_TRANSACTION mode="demo">
           <TransactionID>123</TransactionID>
-          <Currency>EUR</Currency>
+          <GuWID>C822580121385121429927</GuWID>
           <Amount>100</Amount>
-          <CommerceType>eCommerce</CommerceType>
           <CountryCode>DE</CountryCode>
-          <CREDIT_CARD_DATA>
-            <CreditCardNumber>4200000000000000</CreditCardNumber>
-            <CVC2>001</CVC2>
-            <ExpirationYear>2009</ExpirationYear>
-            <ExpirationMonth>01</ExpirationMonth>
-            <CardHolderName>John Doe</CardHolderName>
-          </CREDIT_CARD_DATA>
         </CC_TRANSACTION>
-      </FNC_CC_AUTHORIZATION>
+      </FNC_CC_CAPTURE_AUTHORIZATION>
     </W_JOB>
   </W_REQUEST>
 </WIRECARD_BXML>
