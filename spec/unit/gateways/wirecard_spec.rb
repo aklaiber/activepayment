@@ -38,6 +38,12 @@ describe ActivePayment::Gateway::Wirecard do
     end
   end
 
+  it "should build enrollment check request" do
+    File.open("#{FIXTURES_PATH}/gateways/wirecard/enrollment_check_request.xml") do |xml_file|
+      gateway.enrollment_check_request(credit_card_hash('4200000000000000', :expiration_year => 2009, :card_holder_name => 'John Doe')).should eql(xml_file.read)
+    end
+  end
+
   describe "config" do
     it 'should set by methods' do
       ActivePayment::Gateway::Wirecard.login = 56501

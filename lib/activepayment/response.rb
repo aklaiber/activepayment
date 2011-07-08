@@ -20,6 +20,14 @@ module ActivePayment
       parse(@doc.at_css(node_name).content)
     end
 
+    def successful?
+      self.function_result.eql?('ACK') || self.function_result.eql?('PENDING')
+    end
+
+    def failed?
+      self.function_result.eql?('NOK')
+    end
+
     public
 
     def method_missing(method, *args)

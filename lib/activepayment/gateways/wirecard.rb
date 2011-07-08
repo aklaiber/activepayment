@@ -11,7 +11,7 @@ module ActivePayment
         attr_accessor :login, :password, :signature, :mode, :default_currency
 
         def url
-          if self.mode.eql?('demo')
+          if  self.mode.blank? || self.mode.eql?('demo')
             TEST_URL
           else
             LIVE_URL
@@ -31,6 +31,8 @@ module ActivePayment
       def self.config
         yield self
       end
+
+      public
 
       def authorization(credit_card)
         post_request(self.authorization_request(credit_card))
@@ -78,6 +80,21 @@ module ActivePayment
         end
       end
 
+      def enrollment_check(credit_card)
+        post_request(self.enrollment_check_request(credit_card))
+      end
+
+      def enrollment_check_request(credit_card)
+        build_request(:enrollment_check) do |xml|
+          xml.tag! 'TransactionID', self.transaction_id
+          xml.tag! 'Currency', Wirecard.default_currency
+          xml.tag! 'Amount', self.amount
+
+          add_optional_node(xml, :country_code)
+          add_optional_node(xml, :credit_card_data, credit_card)
+        end
+      end
+
       private
 
       def add_optional_node(xml, name, value = nil)
@@ -97,33 +114,10 @@ module ActivePayment
         end
       end
 
-#      def compulsory_element(xml, name, default_value)
-#        if name.kind_of?(String)
-#          xml.tag! name, default_value
-#        else
-#          if transaction_params.include?(name) && !transaction_params[name].blank?
-#            xml.tag! name.to_node_name, transaction_params[name]
-#            transaction_params.delete(name)
-#          else
-#            xml.tag! name.to_node_name, default_value
-#          end
-#        end
-#      end
-
-#      def build_transaction_element(xml, params)
-#        params.each do |element_name, value|
-#          if value.kind_of?(Hash)
-#            xml.tag! element_name.to_s.upcase do
-#              build_transaction_element(xml, value)
-#            end
-#          else
-#            xml.tag! element_name.to_node_name, value
-#          end
-#        end
-#      end
-
       def transaction_node(xml, &block)
-        xml.tag! 'CC_TRANSACTION', :mode => Wirecard.mode do
+        options = {}
+        options[:mode] = Wirecard.mode unless Wirecard.mode.blank?
+        xml.tag! 'CC_TRANSACTION', options do
           block.call(xml)
         end
       end
