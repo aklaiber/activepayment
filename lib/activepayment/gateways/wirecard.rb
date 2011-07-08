@@ -48,6 +48,10 @@ module ActivePayment
         end
       end
 
+      def capture_authorization(guwid)
+        post_request(self.capture_authorization_request(guwid))
+      end
+
       def capture_authorization_request(guwid)
         build_request(:capture_authorization) do |xml|
           xml.tag! 'TransactionID', self.transaction_id
@@ -56,6 +60,10 @@ module ActivePayment
 
           add_optional_node(xml, :country_code)
         end
+      end
+
+      def purchase(credit_card)
+        post_request(self.purchase_request(credit_card))
       end
 
       def purchase_request(credit_card)
