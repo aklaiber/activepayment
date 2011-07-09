@@ -1,6 +1,6 @@
 module ActivePayment
-  module Gateway
-    class Wirecard
+  module Wirecard
+    class Gateway
 
       TEST_URL = 'https://c3-test.wirecard.com/secure/ssl-gateway'
       LIVE_URL = 'https://c3.wirecard.com/secure/ssl-gateway'
@@ -41,7 +41,7 @@ module ActivePayment
       def authorization_request(credit_card)
         build_request(:authorization) do |xml|
           xml.tag! 'TransactionID', self.transaction_id
-          xml.tag! 'Currency', Wirecard.default_currency
+          xml.tag! 'Currency', Gateway.default_currency
           xml.tag! 'Amount', self.amount
 
           add_optional_node(xml, :commerce_type)
@@ -73,7 +73,7 @@ module ActivePayment
       def purchase_request(credit_card)
         build_request(:purchase) do |xml|
           xml.tag! 'TransactionID', self.transaction_id
-          xml.tag! 'Currency', Wirecard.default_currency
+          xml.tag! 'Currency', Gateway.default_currency
           xml.tag! 'Amount', self.amount
 
           add_optional_node(xml, :commerce_type)
@@ -89,7 +89,7 @@ module ActivePayment
       def enrollment_check_request(credit_card)
         build_request(:enrollment_check) do |xml|
           xml.tag! 'TransactionID', self.transaction_id
-          xml.tag! 'Currency', Wirecard.default_currency
+          xml.tag! 'Currency', Gateway.default_currency
           xml.tag! 'Amount', self.amount
 
           add_optional_node(xml, :country_code)
@@ -118,7 +118,7 @@ module ActivePayment
 
       def transaction_node(xml, &block)
         options = {}
-        options[:mode] = Wirecard.mode unless Wirecard.mode.blank?
+        options[:mode] = Gateway.mode unless Gateway.mode.blank?
         xml.tag! 'CC_TRANSACTION', options do
           block.call(xml)
         end
@@ -131,8 +131,8 @@ module ActivePayment
           xml.tag! 'W_REQUEST' do
             xml.tag! 'W_JOB' do
               xml.tag! 'JobID', self.jop_id
-              xml.tag! 'BusinessCaseSignature', Wirecard.signature
-              xml.tag! "FNC_CC_#{method.upcase}" do
+              xml.tag! 'BusinessCaseSignature', Gateway.signature
+              xml.tag! "FNC_CC_#{method.to_s.upcase}" do
                 xml.tag! 'FunctionID', 'Test dummy FunctionID'
                 transaction_node(xml, &block)
               end
@@ -143,7 +143,7 @@ module ActivePayment
       end
 
       def post_request(xml)
-        uri = URI.parse(Wirecard.url)
+        uri = URI.parse(Gateway.url)
         unless uri.nil?
           http = Net::HTTP.new(uri.host, 443)
           if http
@@ -152,7 +152,7 @@ module ActivePayment
             if request
               request.content_type = "text/xml"
               request.content_length = xml.size
-              request.basic_auth(Wirecard.login, Wirecard.password)
+              request.basic_auth(Gateway.login, Gateway.password)
               request.body = xml
               response = http.request(request)
               if response

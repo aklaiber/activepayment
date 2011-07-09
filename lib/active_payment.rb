@@ -12,7 +12,7 @@ require "uuid"
 
 require "activepayment/version"
 require "activepayment/response"
-require "activepayment/gateways/wirecard"
+require "activepayment/wirecard/gateway"
 
 module ActivePayment
   class Exception < RuntimeError

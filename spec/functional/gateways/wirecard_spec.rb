@@ -1,18 +1,18 @@
 require "spec_helper"
 
-describe ActivePayment::Gateway::Wirecard do
+describe ActivePayment::Wirecard::Gateway do
 
   let(:amount) { 100 }
-  let(:gateway) { ActivePayment::Gateway::Wirecard.new(123, amount) }
+  let(:gateway) { ActivePayment::Wirecard::Gateway.new(123, amount) }
 
   describe "post request" do
 
     before(:all) do
-      ActivePayment::Gateway::Wirecard.login = 56501
-      ActivePayment::Gateway::Wirecard.password = "TestXAPTER"
-      ActivePayment::Gateway::Wirecard.signature = "56501"
-      ActivePayment::Gateway::Wirecard.mode = "demo"
-      ActivePayment::Gateway::Wirecard.default_currency = 'EUR'
+      ActivePayment::Wirecard::Gateway.login = 56501
+      ActivePayment::Wirecard::Gateway.password = "TestXAPTER"
+      ActivePayment::Wirecard::Gateway.signature = "56501"
+      ActivePayment::Wirecard::Gateway.mode = "demo"
+      ActivePayment::Wirecard::Gateway.default_currency = 'EUR'
 
       gateway.jop_id = 'test dummy data'
       gateway.transaction_params = {
@@ -90,10 +90,10 @@ describe ActivePayment::Gateway::Wirecard do
   describe "3D secure" do
 
     before(:all) do
-      ActivePayment::Gateway::Wirecard.login = '000000315DE09F66'
-      ActivePayment::Gateway::Wirecard.password = 'TestXAPTER'
-      ActivePayment::Gateway::Wirecard.signature = '000000315DE0A429'
-      ActivePayment::Gateway::Wirecard.mode = ''
+      ActivePayment::Wirecard::Gateway.login = '000000315DE09F66'
+      ActivePayment::Wirecard::Gateway.password = 'TestXAPTER'
+      ActivePayment::Wirecard::Gateway.signature = '000000315DE0A429'
+      ActivePayment::Wirecard::Gateway.mode = ''
 
       gateway.jop_id = 'test dummy data'
       gateway.transaction_params = {
@@ -108,6 +108,7 @@ describe ActivePayment::Gateway::Wirecard do
       response.successful?.should be_true
       response.status_type.should eql('Y')
       response['GuWID'].should_not be_blank
+      response['PAReq'].should_not be_blank
       response['AcsUrl'].should_not be_blank
     end
   end
