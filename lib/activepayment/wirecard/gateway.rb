@@ -25,6 +25,7 @@ module ActivePayment
       end
 
       def self.config=(config)
+        config = config["wirecard"] if config.include?("wirecard") && !config["wirecard"].blank?
         config.each { |method, value| self.send("#{method}=", value) }
       end
 
@@ -66,15 +67,19 @@ module ActivePayment
         end
       end
 
-      def purchase(credit_card)
-        post_request(self.purchase_request(credit_card))
+      def purchase(credit_card, pares = nil, guwid = nil)
+        post_request(self.purchase_request(credit_card, pares, guwid))
       end
 
-      def purchase_request(credit_card)
+      def purchase_request(credit_card, pares = nil, guwid = nil)
         build_request(:purchase) do |xml|
           xml.tag! 'TransactionID', self.transaction_id
           xml.tag! 'Currency', Gateway.default_currency
           xml.tag! 'Amount', self.amount
+          xml.tag! 'GuWID', guwid unless guwid.blank?
+          xml.tag! 'THREE-D_SECURE' do
+            xml.tag! 'PARes', pares
+          end unless pares.blank?
 
           add_optional_node(xml, :commerce_type)
           add_optional_node(xml, :country_code)

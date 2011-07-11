@@ -38,6 +38,12 @@ describe ActivePayment::Wirecard::Gateway do
     end
   end
 
+  it "should build purchase request with 3d" do
+    File.open("#{FIXTURES_PATH}/wirecard/gateway/purchase_request_with_3d.xml") do |xml_file|
+      gateway.purchase_request(credit_card_hash('4200000000000000', :expiration_year => 2009, :card_holder_name => 'John Doe'), 123, 'C822580121385121429927').should eql(xml_file.read)
+    end
+  end
+
   it "should build enrollment check request" do
     File.open("#{FIXTURES_PATH}/wirecard/gateway/enrollment_check_request.xml") do |xml_file|
       gateway.enrollment_check_request(credit_card_hash('4200000000000000', :expiration_year => 2009, :card_holder_name => 'John Doe')).should eql(xml_file.read)
@@ -103,6 +109,16 @@ describe ActivePayment::Wirecard::Gateway do
       ActivePayment::Wirecard::Gateway.login.should eql(56503)
       ActivePayment::Wirecard::Gateway.password.should eql("TestXAPTERR")
       ActivePayment::Wirecard::Gateway.signature.should eql(56503)
+    end
+
+    it 'should set by yml' do
+      File.open("#{FIXTURES_PATH}/activepayment_config.yml") do |config_file|
+        ActivePayment::Wirecard::Gateway.config = YAML.load(config_file.read)['development']
+
+        ActivePayment::Wirecard::Gateway.login.should eql(56504)
+        ActivePayment::Wirecard::Gateway.password.should eql("TestXAPTERR")
+        ActivePayment::Wirecard::Gateway.signature.should eql(56504)
+      end
     end
   end
 

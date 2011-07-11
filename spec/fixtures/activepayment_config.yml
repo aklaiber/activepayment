@@ -1,0 +1,10 @@
+development:
+  wirecard:
+    login: 56504
+    password: TestXAPTERR
+    signature: 56504
+
+test:
+
+production:
+
