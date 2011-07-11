@@ -112,15 +112,6 @@ describe ActivePayment::Wirecard::Gateway do
       response['AcsUrl'].should_not be_blank
     end
 
-    it "should post purchase request" do
-      response = gateway.purchase(credit_card_hash)
-
-      response.successful?.should be_true
-      response.info.should include('THIS IS A DEMO')
-      response.status_type.should eql('INFO')
-      response.authorization_code.should_not be_blank
-      response['GuWID'].should_not be_blank
-    end
   end
 
 end
