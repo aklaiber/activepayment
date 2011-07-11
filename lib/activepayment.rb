@@ -10,6 +10,7 @@ require "nokogiri"
 require "money"
 require "uuid"
 
+require "activepayment/railtie" if defined?(Rails)
 require "activepayment/version"
 require "activepayment/response"
 require "activepayment/wirecard/gateway"
