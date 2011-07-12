@@ -102,7 +102,7 @@ describe ActivePayment::Wirecard::Gateway do
       }
     end
 
-    it "should post enrollment_check request" do
+    it "should enrollment_check is successfully" do
       response = gateway.enrollment_check(credit_card_hash('4012000300001003', :cvc2 => '003'))
 
       response.successful?.should be_true
