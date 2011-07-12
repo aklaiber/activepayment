@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors = ["Alexander Klaiber"]
   s.email = ["alex.klaiber@gmail.com"]
   s.homepage = ""
-  s.summary = "Payment interface"
-  s.description = "Payment interface"
+  s.summary = "CreditCard transactions framework"
+  s.description = "ActivePayment is an abstraction layer for different Payment-Interfaces (XML, JSON)"
 
   s.rubyforge_project = "activepayment"
 
