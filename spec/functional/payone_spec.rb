@@ -5,6 +5,23 @@ describe ActivePayment::Payone::Gateway do
   let(:amount) { 100 }
   let(:gateway) { ActivePayment::Payone::Gateway.new(amount) }
 
+  before(:each) do
+    gateway.aid = 18270
+    gateway.transaction_params = {
+        :clearingtype => 'cc',
+        :cardholder => "John Doe",
+        :cardexpiredate => "1202",
+        :cardtype => "V",
+        :cardpan => "4901170005495083",
+        :cardcvc2 => 233,
+        :reference => Time.now.to_i,
+        :lastname => 'Doe',
+        :firstname => 'John',
+        :country => 'DE',
+        :productid  => 4893
+    }
+  end
+
   describe "Portal Zugang" do
 
     before(:all) do
@@ -13,20 +30,13 @@ describe ActivePayment::Payone::Gateway do
       ActivePayment::Payone::Gateway.key = 'test'
       ActivePayment::Payone::Gateway.mode = "test"
       ActivePayment::Payone::Gateway.default_currency = 'EUR'
-
-      gateway.aid = 18270
-      gateway.transaction_params = {
-          :clearingtype => 'cc',
-          :cardholder => "John Doe",
-          :cardexpiredate => "1202",
-          :cardtype => "V",
-          :cardpan => "4901170005495083",
-          :cardcvc2 => 233,
-          :reference => "00000000000000000001",
-      }
     end
 
+    it "should post authorization request" do
+      response = gateway.createaccess
 
+      response.successful?.should be_true
+    end
   end
 
   describe "Portal Shop" do
@@ -36,30 +46,12 @@ describe ActivePayment::Payone::Gateway do
       ActivePayment::Payone::Gateway.key = 'test'
       ActivePayment::Payone::Gateway.mode = 'test'
       ActivePayment::Payone::Gateway.default_currency = 'EUR'
-
-      gateway.aid = 18270
-      gateway.transaction_params = {
-          :clearingtype => 'cc',
-          :cardholder => "John Doe",
-          :cardexpiredate => "1202",
-          :cardtype => "V",
-          :cardpan => "4901170005495083",
-          :cardcvc2 => 233,
-          :reference => rand(10000),
-          :lastname => 'Doe',
-          :firstname => 'John',
-          :country => 'DE'
-      }
     end
 
     it "should post authorization request" do
       response = gateway.authorization
 
       response.successful?.should be_true
-#      response.info.should include('THIS IS A DEMO')
-#      response.status_type.should eql('INFO')
-#      response.authorization_code.should_not be_blank
-#      response['GuWID'].should_not be_blank
     end
   end
 

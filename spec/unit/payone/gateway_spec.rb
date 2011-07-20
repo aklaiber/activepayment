@@ -28,6 +28,10 @@ describe ActivePayment::Payone::Gateway do
     gateway.authorization_request.should_not be_blank
   end
 
+  it "should build createaccess request" do
+    gateway.createaccess_request.should_not be_blank
+  end
+
   describe "config" do
     it 'should set by methods' do
       ActivePayment::Payone::Gateway.mid = 1

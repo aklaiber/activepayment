@@ -10,8 +10,12 @@ module ActivePayment
       self.test_url = 'https://api.pay1.de/post-gateway/'
       self.live_url = ''
 
-      def authorization
-        post_request(self.authorization_request)
+      def self.method_added(method)
+        if method.to_s.include?("_request") && !method.eql?(:build_request) && !method.eql?(:post_request)
+          define_method(method.to_s.gsub("_request", '')) do
+            post_request(self.send(method))
+          end
+        end
       end
 
       def authorization_request
@@ -20,6 +24,14 @@ module ActivePayment
           params[:amount] = self.amount
           params[:reference] = self.transaction_params[:reference]
           params[:currency] = Gateway.default_currency
+
+          params.merge!(self.transaction_params)
+        end
+      end
+
+      def createaccess_request
+        build_request(:createaccess) do |params|
+          params[:aid] = self.aid
 
           params.merge!(self.transaction_params)
         end
