@@ -1,3 +1,4 @@
 == Supported Gateways
 
+* {Payone}[http://www.payone.de] - DE
 * {Wirecard}[http://www.wirecard.com] - DE

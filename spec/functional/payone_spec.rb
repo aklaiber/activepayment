@@ -14,12 +14,12 @@ describe ActivePayment::Payone::Gateway do
         :cardtype => "V",
         :cardpan => "4901170005495083",
         :cardcvc2 => 233,
-        :reference => Time.now.to_i,
         :lastname => 'Doe',
         :firstname => 'John',
         :country => 'DE',
         :productid  => 4893,
-        :amount => amount
+        :amount => amount,
+        :reference => 'test'
     }
   end
 
@@ -29,12 +29,12 @@ describe ActivePayment::Payone::Gateway do
       ActivePayment::Payone::Gateway.mid = 18268
       ActivePayment::Payone::Gateway.portalid = 2226
       ActivePayment::Payone::Gateway.key = 'test'
-      ActivePayment::Payone::Gateway.mode = "test"
+      ActivePayment::Payone::Gateway.mode = 'test'
       ActivePayment::Payone::Gateway.default_currency = 'EUR'
     end
 
     it "should post authorization request" do
-      response = gateway.createaccess
+      response = gateway.createaccess(:reference => Time.now.to_i + rand(10000))
 
       response.successful?.should be_true
     end
@@ -50,7 +50,7 @@ describe ActivePayment::Payone::Gateway do
     end
 
     it "should post authorization request" do
-      response = gateway.authorization
+      response = gateway.authorization(:reference => Time.now.to_i + rand(10000))
 
       response.successful?.should be_true
     end

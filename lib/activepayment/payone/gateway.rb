@@ -8,25 +8,25 @@ module ActivePayment
       self.test_url = 'https://api.pay1.de/post-gateway/'
       self.live_url = ''
 
-      def self.method_added(method)
-        if method.to_s.include?("_request") && !method.eql?(:build_request) && !method.eql?(:post_request)
-          define_method(method.to_s.gsub("_request", '')) do
-            post_request(self.send(method))
-          end
-        end
+      def authorization(local_params = {})
+        post_request(self.authorization_request(local_params))
       end
 
-      def authorization_request
+      def authorization_request(local_params = {})
         build_request(:authorization, [:aid, :amount, :currency, :reference]) do |params|
           params[:currency] = Gateway.default_currency
 
-          params.merge!(self.transaction_params)
+          params.merge!(local_params)
         end
       end
 
-      def createaccess_request
+      def createaccess(local_params = {})
+        post_request(self.createaccess_request(local_params))
+      end
+
+      def createaccess_request(local_params = {})
         build_request(:createaccess, [:aid, :reference]) do |params|
-          params.merge!(self.transaction_params)
+          params.merge!(local_params)
         end
       end
 
@@ -43,6 +43,7 @@ module ActivePayment
 
       def build_request(method, obligation_params = [], &block)
         params = {:mid => self.mid, :portalid => self.portalid, :key => Digest::MD5.new.hexdigest(self.key), :mode => self.mode, :request => method}
+        params.merge!(self.transaction_params)
         yield params
         obligation_params.each do |obligation_param|
           unless params.include?(obligation_param)
