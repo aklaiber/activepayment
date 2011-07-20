@@ -1,0 +1,1 @@
+aid=18270&amount=100&cardcvc2=233&cardexpiredate=1202&cardholder=John+Doe&cardpan=4901170005495083&cardtype=V&clearingtype=cc&currency=EUR&key=0&mid=18268&mode=test&portalid=2226&reference=00000000000000000001&request=authorization

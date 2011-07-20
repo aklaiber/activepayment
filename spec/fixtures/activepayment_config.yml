@@ -4,6 +4,11 @@ development:
     password: TestXAPTERR
     signature: 56504
 
+  payone:
+    mid: 1
+    portalid: 2
+    key: test_key
+
 test:
 
 production:

@@ -3,6 +3,7 @@ require "bundler/setup"
 require 'uri'
 require 'net/http'
 require 'net/https'
+require 'digest/md5'
 
 require "active_support/core_ext"
 require "builder"
@@ -13,7 +14,12 @@ require "uuid"
 require "activepayment/railtie" if defined?(Rails)
 require "activepayment/version"
 require "activepayment/response"
+require "activepayment/gateway_base"
+
+require "activepayment/payone/gateway"
 require "activepayment/wirecard/gateway"
+
+require "activepayment/payone/response"
 
 module ActivePayment
   class Exception < RuntimeError

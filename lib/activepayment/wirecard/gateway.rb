@@ -1,36 +1,18 @@
 module ActivePayment
   module Wirecard
-    class Gateway
+    class Gateway < ActivePayment::Gateway::Base
 
-      TEST_URL = 'https://c3-test.wirecard.com/secure/ssl-gateway'
-      LIVE_URL = 'https://c3.wirecard.com/secure/ssl-gateway'
+      class_attribute :login, :password, :signature, :mode
 
-      attr_accessor :transaction_id, :amount, :transaction_params, :jop_id
+      attr_accessor :transaction_id, :jop_id
 
-      class << self
-        attr_accessor :login, :password, :signature, :mode, :default_currency
-
-        def url
-          if  self.mode.blank? || self.mode.eql?('demo')
-            TEST_URL
-          else
-            LIVE_URL
-          end
-        end
-      end
+      self.gateway_name = "wirecard"
+      self.test_url = 'https://c3-test.wirecard.com/secure/ssl-gateway'
+      self.live_url = 'https://c3.wirecard.com/secure/ssl-gateway'
 
       def initialize(transaction_id, amount)
         @transaction_id = transaction_id
-        @amount = amount
-      end
-
-      def self.config=(config)
-        config = config["wirecard"] if config.include?("wirecard") && !config["wirecard"].blank?
-        config.each { |method, value| self.send("#{method}=", value) }
-      end
-
-      def self.config
-        yield self
+        super(amount)
       end
 
       public
@@ -148,21 +130,16 @@ module ActivePayment
       end
 
       def post_request(xml)
-        uri = URI.parse(Gateway.url)
-        unless uri.nil?
-          http = Net::HTTP.new(uri.host, 443)
-          if http
-            http.use_ssl = true
-            request = Net::HTTP::Post.new(uri.path)
-            if request
-              request.content_type = "text/xml"
-              request.content_length = xml.size
-              request.basic_auth(Gateway.login, Gateway.password)
-              request.body = xml
-              response = http.request(request)
-              if response
-                return Response.new(response.body)
-              end
+        http_connection do |http|
+          request = Net::HTTP::Post.new(self.url.path)
+          unless request.blank?
+            request.content_type = "text/xml"
+            request.content_length = xml.size
+            request.basic_auth(Gateway.login, Gateway.password)
+            request.body = xml
+            response = http.request(request)
+            if response
+              return Response.new(response.body)
             end
           end
         end
