@@ -12,8 +12,8 @@ describe ActivePayment::Payone::Gateway do
     ActivePayment::Payone::Gateway.mode = "test"
     ActivePayment::Payone::Gateway.default_currency = 'EUR'
 
-    gateway.aid = 18270
     gateway.transaction_params = {
+        :aid => 18270,
         :clearingtype => 'cc',
         :cardholder => "John Doe",
         :cardexpiredate => "1202",
@@ -21,6 +21,7 @@ describe ActivePayment::Payone::Gateway do
         :cardpan => "4901170005495083",
         :cardcvc2 => 233,
         :reference => "00000000000000000001",
+        :amount => amount
     }
   end
 
@@ -30,6 +31,11 @@ describe ActivePayment::Payone::Gateway do
 
   it "should build createaccess request" do
     gateway.createaccess_request.should_not be_blank
+  end
+
+  it "should get exception if forget mandatory parameter" do
+    gateway.transaction_params.delete(:reference)
+    lambda { gateway.createaccess_request }.should raise_exception(ActivePayment::Exception, "Payone API Parameters not complete: reference not exists")
   end
 
   describe "config" do

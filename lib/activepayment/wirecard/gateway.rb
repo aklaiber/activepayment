@@ -4,7 +4,7 @@ module ActivePayment
 
       class_attribute :login, :password, :signature, :mode
 
-      attr_accessor :transaction_id, :jop_id
+      attr_accessor :amount, :transaction_id, :jop_id
 
       self.gateway_name = "wirecard"
       self.test_url = 'https://c3-test.wirecard.com/secure/ssl-gateway'
@@ -12,7 +12,7 @@ module ActivePayment
 
       def initialize(transaction_id, amount)
         @transaction_id = transaction_id
-        super(amount)
+        @amount = amount
       end
 
       public

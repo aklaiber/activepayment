@@ -4,8 +4,6 @@ module ActivePayment
 
       class_attribute :mid, :portalid, :key, :mode
 
-      attr_accessor :aid
-
       self.gateway_name = "payone"
       self.test_url = 'https://api.pay1.de/post-gateway/'
       self.live_url = ''
@@ -19,10 +17,7 @@ module ActivePayment
       end
 
       def authorization_request
-        build_request(:authorization) do |params|
-          params[:aid] = self.aid
-          params[:amount] = self.amount
-          params[:reference] = self.transaction_params[:reference]
+        build_request(:authorization, [:aid, :amount, :currency, :reference]) do |params|
           params[:currency] = Gateway.default_currency
 
           params.merge!(self.transaction_params)
@@ -30,9 +25,7 @@ module ActivePayment
       end
 
       def createaccess_request
-        build_request(:createaccess) do |params|
-          params[:aid] = self.aid
-
+        build_request(:createaccess, [:aid, :reference]) do |params|
           params.merge!(self.transaction_params)
         end
       end
@@ -48,9 +41,14 @@ module ActivePayment
         end
       end
 
-      def build_request(method, &block)
+      def build_request(method, obligation_params = [], &block)
         params = {:mid => self.mid, :portalid => self.portalid, :key => Digest::MD5.new.hexdigest(self.key), :mode => self.mode, :request => method}
         yield params
+        obligation_params.each do |obligation_param|
+          unless params.include?(obligation_param)
+            raise Exception, "Payone API Parameters not complete: #{obligation_param} not exists"
+          end
+        end
         params.to_query
       end
 

@@ -4,11 +4,7 @@ module ActivePayment
 
       class_attribute :gateway_name, :test_url, :live_url, :default_currency
 
-      attr_accessor :amount, :transaction_params
-
-      def initialize(amount)
-        @amount = amount
-      end
+      attr_accessor :transaction_params
 
       def self.config=(config)
         config = config[self.gateway_name] if config.include?(self.gateway_name) && !config[self.gateway_name].blank?

@@ -6,8 +6,8 @@ describe ActivePayment::Payone::Gateway do
   let(:gateway) { ActivePayment::Payone::Gateway.new(amount) }
 
   before(:each) do
-    gateway.aid = 18270
     gateway.transaction_params = {
+        :aid => 18270,
         :clearingtype => 'cc',
         :cardholder => "John Doe",
         :cardexpiredate => "1202",
@@ -18,7 +18,8 @@ describe ActivePayment::Payone::Gateway do
         :lastname => 'Doe',
         :firstname => 'John',
         :country => 'DE',
-        :productid  => 4893
+        :productid  => 4893,
+        :amount => amount
     }
   end
 
