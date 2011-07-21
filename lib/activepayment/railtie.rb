@@ -4,7 +4,10 @@ module ActivePayment
     initializer "setup payment" do
       config_file = Rails.root.join("config", "activepayment.yml")
       if config_file.file?
-        ActivePayment::Wirecard::Gateway.config = YAML.load(ERB.new(config_file.read).result)[Rails.env]
+        gateways = YAML.load(ERB.new(config_file.read).result)[Rails.env]
+        gateways.each do |gateway, config|
+          ActivePayment::Gateway::Base.build(gateway).config = config
+        end
       end
     end
 

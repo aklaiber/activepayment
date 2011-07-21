@@ -6,6 +6,10 @@ module ActivePayment
 
       attr_accessor :transaction_params
 
+      def self.build(name)
+        "ActivePayment::#{name.to_s.classify}::Gateway".constantize
+      end
+
       def self.config=(config)
         config = config[self.gateway_name] if config.include?(self.gateway_name) && !config[self.gateway_name].blank?
         config.each { |method, value| self.send("#{method}=", value) }

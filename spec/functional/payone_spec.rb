@@ -33,7 +33,7 @@ describe ActivePayment::Payone::Gateway do
       ActivePayment::Payone::Gateway.default_currency = 'EUR'
     end
 
-    it "should post authorization request" do
+    it "should post createaccess request" do
       response = gateway.createaccess(:reference => Time.now.to_i + rand(10000))
 
       response.successful?.should be_true
