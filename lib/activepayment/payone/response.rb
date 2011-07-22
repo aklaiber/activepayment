@@ -20,7 +20,7 @@ module ActivePayment
       end
 
       def successful?
-        self.status.eql?('APPROVED') || self.status.eql?('REDIRECT')
+        self.status.eql?('APPROVED') || self.status.eql?('REDIRECT') || self.status.eql?('OK')
       end
 
       def failed?

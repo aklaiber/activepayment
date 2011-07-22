@@ -7,28 +7,27 @@ module ActivePayment
       self.gateway_name = "payone"
       self.test_url = 'https://api.pay1.de/post-gateway/'
       self.live_url = ''
+      self.default_currency = 'EUR'
 
-      def authorization(local_params = {})
-        post_request(self.authorization_request(local_params))
-      end
+      private
 
-      def authorization_request(local_params = {})
-        build_request(:authorization, [:aid, :amount, :currency, :reference]) do |params|
-          params[:currency] = Gateway.default_currency
-
-          params.merge!(local_params)
+      def self.define_request(name, options = {})
+        define_method(name) do |local_params = {}|
+          post_request(self.send("#{name}_request", local_params))
+        end
+        define_method("#{name}_request") do |local_params = {}|
+          build_request(name, options) do |params|
+            params.merge!(local_params)
+          end
         end
       end
 
-      def createaccess(local_params = {})
-        post_request(self.createaccess_request(local_params))
-      end
+      public
 
-      def createaccess_request(local_params = {})
-        build_request(:createaccess, [:aid, :reference]) do |params|
-          params.merge!(local_params)
-        end
-      end
+      define_request :authorization, :obligation_params => [:aid, :amount, :currency, :reference], :default => {:currency => self.default_currency}
+      define_request :createaccess, :obligation_params => [:aid, :reference]
+      define_request :updateuser, :obligation_params => [:userid]
+      define_request :updateaccess, :obligation_params => [:accessid, :action]
 
       private
 
@@ -41,16 +40,23 @@ module ActivePayment
         end
       end
 
-      def build_request(method, obligation_params = [], &block)
+      def build_request(method, options = {}, &block)
         params = {:mid => self.mid, :portalid => self.portalid, :key => Digest::MD5.new.hexdigest(self.key), :mode => self.mode, :request => method}
-        params.merge!(self.transaction_params)
+        params.merge!(options[:default]) if options[:default]
+        params.merge!(self.transaction_params) if self.transaction_params
         yield params
+        check_params(params, options[:obligation_params]) if options[:obligation_params]
+        params.to_query
+      end
+
+      def check_params(params, obligation_params)
         obligation_params.each do |obligation_param|
-          unless params.include?(obligation_param)
+          if !params.include?(obligation_param)
             raise Exception, "Payone API Parameters not complete: #{obligation_param} not exists"
+          elsif params[obligation_param].blank?
+            raise Exception, "Payone API Parameters not complete: #{obligation_param} is nil or empty"
           end
         end
-        params.to_query
       end
 
       def post_request(content)

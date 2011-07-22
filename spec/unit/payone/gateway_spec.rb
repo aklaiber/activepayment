@@ -10,7 +10,6 @@ describe ActivePayment::Payone::Gateway do
     ActivePayment::Payone::Gateway.portalid = 2226
     ActivePayment::Payone::Gateway.key = 'test'
     ActivePayment::Payone::Gateway.mode = "test"
-    ActivePayment::Payone::Gateway.default_currency = 'EUR'
 
     gateway.transaction_params = {
         :aid => 18270,
@@ -31,6 +30,14 @@ describe ActivePayment::Payone::Gateway do
 
   it "should build createaccess request" do
     gateway.createaccess_request.should_not be_blank
+  end
+
+  it "should build updateuser request" do
+    gateway.updateuser_request(:userid => 123).should_not be_blank
+  end
+
+  it "should build updateaccess request" do
+    gateway.updateaccess_request(:accessid  => 123, :action => 'update').should_not be_blank
   end
 
   it "should get exception if forget mandatory parameter" do
