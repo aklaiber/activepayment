@@ -1,4 +1,13 @@
 source "http://rubygems.org"
 
-# Specify your gem's dependencies in activepayment.gemspec
-gemspec
+gem 'activesupport'
+gem 'nokogiri'
+gem 'builder'
+gem 'money'
+gem 'uuid'
+
+group :development, :test do
+  gem 'rake'
+  gem 'rspec'
+  gem 'forgery'
+end
