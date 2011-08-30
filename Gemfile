@@ -1,9 +1,9 @@
 source "http://rubygems.org"
 
 gem 'activesupport'
+gem 'i18n'
 gem 'nokogiri'
 gem 'builder'
-gem 'money'
 gem 'uuid'
 
 group :development, :test do

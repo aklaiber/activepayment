@@ -8,7 +8,6 @@ require 'digest/md5'
 require "active_support/core_ext"
 require "builder"
 require "nokogiri"
-require "money"
 require "uuid"
 
 require "activepayment/railtie" if defined?(Rails)
