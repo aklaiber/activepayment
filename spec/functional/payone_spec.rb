@@ -10,9 +10,9 @@ describe ActivePayment::Payone::Gateway do
         :aid => 18270,
         :clearingtype => 'cc',
         :cardholder => "John Doe",
-        :cardexpiredate => "1202",
+        :cardexpiredate => "#{(Date.today + 1.year).strftime("%y")}02",
         :cardtype => "V",
-        :cardpan => "4901170005495083",
+        :cardpan => "4111111111111111",
         :cardcvc2 => 233,
         :lastname => 'Doe',
         :firstname => 'John',
@@ -50,11 +50,10 @@ describe ActivePayment::Payone::Gateway do
     end
 
     it "should post updateaccess request" do
-      response = gateway.updateaccess(:accessid  => payone_access_id, :action => 'update')
+      response = gateway.updateaccess(:accessid => payone_access_id, :action => 'update')
 
       response.successful?.should be_true
     end
-
   end
 
   describe "Portal Shop" do

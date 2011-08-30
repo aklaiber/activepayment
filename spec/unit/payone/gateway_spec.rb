@@ -13,6 +13,7 @@ describe ActivePayment::Payone::Gateway do
 
     gateway.transaction_params = {
         :aid => 18270,
+        :productid => 123,
         :clearingtype => 'cc',
         :cardholder => "John Doe",
         :cardexpiredate => "1202",
@@ -25,19 +26,56 @@ describe ActivePayment::Payone::Gateway do
   end
 
   it "should build authorization request" do
-    gateway.authorization_request.should_not be_blank
+    request = gateway.authorization_request
+
+    request.should_not be_blank
+    request.should include('request=authorization')
+    request.should include('aid=18270')
+    request.should include('clearingtype=cc')
+    request.should include('reference=00000000000000000001')
+    request.should include('amount=100')
+    request.should include('currency=EUR')
   end
 
   it "should build createaccess request" do
-    gateway.createaccess_request.should_not be_blank
+    request = gateway.createaccess_request
+
+    request.should_not be_blank
+    request.should include('request=createaccess')
+    request.should include('aid=18270')
+    request.should include('clearingtype=cc')
+    request.should include('reference=00000000000000000001')
+    request.should include('productid=123')
   end
 
   it "should build updateuser request" do
-    gateway.updateuser_request(:userid => 123).should_not be_blank
+    request = gateway.updateuser_request(:userid => 123)
+
+    request.should_not be_blank
+    request.should include('request=updateuser')
+    request.should include('userid=123')
   end
 
   it "should build updateaccess request" do
-    gateway.updateaccess_request(:accessid  => 123, :action => 'update').should_not be_blank
+    request = gateway.updateaccess_request(:accessid => 123, :action => 'update')
+
+    request.should_not be_blank
+    request.should include('request=updateaccess')
+    request.should include('accessid=123')
+    request.should include('action=update')
+  end
+
+  it "should build 3dscheck request" do
+    request = gateway.threedscheck_request(:cardpan => "4111111111111111", :exiturl => "http://www.example.com")
+
+    request.should_not be_blank
+    request.should include('request=3dscheck')
+    request.should include('amount=100')
+    request.should include('currency=EUR')
+    request.should include('clearingtype=cc')
+    request.should include('exiturl=http%3A%2F%2Fwww.example.com')
+    request.should include('cardpan=4111111111111111')
+    request.should include('cardtype=V')
   end
 
   it "should get exception if forget mandatory parameter" do

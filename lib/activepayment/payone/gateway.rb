@@ -16,7 +16,8 @@ module ActivePayment
           post_request(self.send("#{name}_request", local_params))
         end
         define_method("#{name}_request") do |local_params = {}|
-          build_request(name, options) do |params|
+          request_method = options[:request_method].blank? ? name : options[:request_method]
+          build_request(request_method, options) do |params|
             params.merge!(local_params)
           end
         end
@@ -28,6 +29,7 @@ module ActivePayment
       define_request :createaccess, :obligation_params => [:aid, :reference]
       define_request :updateuser, :obligation_params => [:userid]
       define_request :updateaccess, :obligation_params => [:accessid, :action]
+      define_request :threedscheck, :request_method => '3dscheck', :obligation_params => [:aid], :default => {:currency => self.default_currency}
 
       private
 
