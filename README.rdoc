@@ -12,7 +12,7 @@ or add the following line to Gemfile:
 
 and run bundle install from your shell.
 
-== User
+== Examples
 
 === Config
 
