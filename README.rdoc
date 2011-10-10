@@ -1,4 +1,4 @@
-== ActivePayment
+= ActivePayment
 
 ActivePayment is an abstraction layer for different Payment-Interfaces (XML, JSON)
 
