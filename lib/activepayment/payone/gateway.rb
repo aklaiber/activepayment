@@ -29,6 +29,7 @@ module ActivePayment
       define_request :createaccess, :obligation_params => [:aid, :reference]
       define_request :updateuser, :obligation_params => [:userid]
       define_request :updateaccess, :obligation_params => [:accessid, :action]
+      define_request :updatereminder, :obligation_params => [:txid]
       define_request :threedscheck, :request_method => '3dscheck', :obligation_params => [:aid], :default => {:currency => self.default_currency}
 
       private

@@ -78,6 +78,14 @@ describe ActivePayment::Payone::Gateway do
     request.should include('cardtype=V')
   end
 
+  it "should build updatereminder request" do
+    request = gateway.updatereminder_request(:txid  => 123, :reminderlevel => 2)
+
+    request.should_not be_blank
+    request.should include('txid=123')
+    request.should include('reminderlevel=2')
+  end
+
   it "should get exception if forget mandatory parameter" do
     gateway.transaction_params.delete(:reference)
     lambda { gateway.createaccess_request }.should raise_exception(ActivePayment::Exception, "Payone API Parameters not complete: reference not exists")
