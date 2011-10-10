@@ -1,1 +1,2 @@
 script: "bundle exec rake spec:unit"
+rvm: 1.9.2
