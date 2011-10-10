@@ -1,5 +1,17 @@
 == ActivePayment
 
+ActivePayment is an abstraction layer for different Payment-Interfaces (XML, JSON)
+
+== Install
+
+  gem install activepayment
+
+or add the following line to Gemfile:
+
+  gem 'activepayment'
+
+and run bundle install from your shell.
+
 == Supported Gateways
 
 * {Payone}[http://www.payone.de] - DE
