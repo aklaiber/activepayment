@@ -2,6 +2,12 @@
 
 ActivePayment is an abstraction layer for different Payment-Interfaces (XML, JSON)
 
+== Compatibility
+
+activepayment is tested against Ruby 1.9.2 and 1.9.3.
+
+{<img src="http://travis-ci.org/aklaiber/activepayment.png" />}[http://travis-ci.org/aklaiber/activepayment.png]
+
 == Install
 
   gem install activepayment
