@@ -30,11 +30,7 @@ describe ActivePayment::Payone::Gateway do
     let(:payone_access_id) { payone_response.accessid }
 
     before(:all) do
-      ActivePayment::Payone::Gateway.mid = 18268
-      ActivePayment::Payone::Gateway.portalid = 2226
-      ActivePayment::Payone::Gateway.key = 'test'
-      ActivePayment::Payone::Gateway.mode = 'test'
-      ActivePayment::Payone::Gateway.default_currency = 'EUR'
+      ActivePayment::Payone::Gateway.config = load_config('payone', 'zugang')
     end
 
     it "should post createaccess request" do
@@ -58,11 +54,7 @@ describe ActivePayment::Payone::Gateway do
 
   describe "Portal Shop" do
     before(:all) do
-      ActivePayment::Payone::Gateway.mid = 18268
-      ActivePayment::Payone::Gateway.portalid = 2013125
-      ActivePayment::Payone::Gateway.key = 'test'
-      ActivePayment::Payone::Gateway.mode = 'test'
-      ActivePayment::Payone::Gateway.default_currency = 'EUR'
+      ActivePayment::Payone::Gateway.config = load_config('payone', 'shop')
     end
 
     it "should post authorization request" do

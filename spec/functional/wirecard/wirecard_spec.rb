@@ -8,11 +8,7 @@ describe ActivePayment::Wirecard::Gateway do
   describe "post request" do
 
     before(:all) do
-      ActivePayment::Wirecard::Gateway.login = 56501
-      ActivePayment::Wirecard::Gateway.password = "TestXAPTER"
-      ActivePayment::Wirecard::Gateway.signature = "56501"
-      ActivePayment::Wirecard::Gateway.mode = "demo"
-      ActivePayment::Wirecard::Gateway.default_currency = 'EUR'
+      ActivePayment::Wirecard::Gateway.config = load_config('wirecard', 'without_3d_secure')
 
       gateway.jop_id = 'test dummy data'
       gateway.transaction_params = {
@@ -90,10 +86,7 @@ describe ActivePayment::Wirecard::Gateway do
   describe "3D secure" do
 
     before(:all) do
-      ActivePayment::Wirecard::Gateway.login = '000000315DE09F66'
-      ActivePayment::Wirecard::Gateway.password = 'TestXAPTER'
-      ActivePayment::Wirecard::Gateway.signature = '000000315DE0A429'
-      ActivePayment::Wirecard::Gateway.mode = ''
+      ActivePayment::Wirecard::Gateway.config = load_config('wirecard', 'with_3d_secure')
 
       gateway.jop_id = 'test dummy data'
       gateway.transaction_params = {

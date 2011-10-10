@@ -20,3 +20,15 @@ def credit_card_hash(number = '4200000000000000', options = {})
       :card_holder_name => Forgery::Name.full_name
   }.update(options)
 end
+
+def load_config(path, type = nil)
+  config = YAML::load(File.open(File.join(File.dirname(__FILE__), 'functional', path, "config.yml")).read)
+  unless type.blank?
+    if !config.blank? && !config[type].blank?
+      return config[type]
+    end
+  else
+    return config unless config.blank?
+  end
+  raise "Please set your own #{path} account data"
+end
