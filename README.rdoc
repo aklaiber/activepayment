@@ -12,6 +12,23 @@ or add the following line to Gemfile:
 
 and run bundle install from your shell.
 
+== User
+
+=== Config
+
+  ActivePayment::Payone::Gateway.config = {:mid => 123456, :portalid => 1234, :key => 'test', :mode => 'test'}
+
+=== Post request
+
+  gateway = ActivePayment::Payone::Gateway.new
+
+  gateway.authorization
+  gateway.createaccess
+  gateway.updateuser(:userid => 123)
+  gateway.updateaccess(:accessid => 123, :action => 'update')
+  gateway.threedscheck(:cardpan => "4111111111111111", :exiturl => "http://www.example.com")
+  gateway.updatereminder(:txid  => 123, :reminderlevel => 2)
+
 == Supported Gateways
 
 * {Payone}[http://www.payone.de] - DE
