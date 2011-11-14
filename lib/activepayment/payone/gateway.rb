@@ -6,7 +6,7 @@ module ActivePayment
 
       self.gateway_name = "payone"
       self.test_url = 'https://api.pay1.de/post-gateway/'
-      self.live_url = ''
+      self.live_url = 'https://api.pay1.de/post-gateway/'
       self.default_currency = 'EUR'
 
       private
