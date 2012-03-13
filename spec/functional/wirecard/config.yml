@@ -1,4 +1,9 @@
 without_3d_secure:
+  login: 56501
+  password: TestXAPTER
+  signature: 56501
+  mode: demo
+  default_currency: EUR
 
 
 with_3d_secure:

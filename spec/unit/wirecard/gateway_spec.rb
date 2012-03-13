@@ -78,6 +78,13 @@ describe ActivePayment::Wirecard::Gateway do
         gateway.authorization_request(credit_card_hash('4200000000000000', :expiration_year => 2009, :card_holder_name => 'John Doe')).should eql(xml_file.read)
       end
     end
+
+    it "should build purchase request" do
+      request = gateway.purchase_request(credit_card_hash('4200000000000000', :expiration_year => 2009, :card_holder_name => 'John Doe'))
+
+      request.should include("<IPAddress>192.168.1.1</IPAddress>")
+      request.should include("<FirstName>John</FirstName>")
+    end
   end
 
   describe "config" do
