@@ -1,4 +1,16 @@
 without_3d_secure:
+  wirecard:
+      login: 56501
+      password: TestXAPTER
+      signature: 56501
+      mode: demo
+      default_currency: EUR
 
 with_3d_secure:
+  wirecard:
+      login: 000000315DE09F66
+      password: TestXAPTER
+      signature: 000000315DE0A429
+      mode:
+      default_currency: EUR
 
