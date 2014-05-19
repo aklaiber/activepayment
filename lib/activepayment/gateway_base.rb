@@ -2,9 +2,14 @@ module ActivePayment
   module Gateway
     class Base
 
-      class_attribute :gateway_name, :test_url, :live_url, :default_currency
+      class_attribute :gateway_name, :test_url, :live_url, :default_currency, :mode
 
-      attr_accessor :transaction_params
+      attr_accessor :transaction_params, :amount, :transaction_id
+
+      def initialize(transaction_id, amount)
+        @transaction_id = transaction_id
+        @amount = Money.new(amount, default_currency.upcase)
+      end
 
       def self.build(name)
         "ActivePayment::#{name.to_s.classify}::Gateway".constantize

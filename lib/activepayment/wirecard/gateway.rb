@@ -10,13 +10,6 @@ module ActivePayment
       self.test_url = 'https://c3-test.wirecard.com/secure/ssl-gateway'
       self.live_url = 'https://c3.wirecard.com/secure/ssl-gateway'
 
-      def initialize(transaction_id, amount)
-        @transaction_id = transaction_id
-        @amount = amount
-      end
-
-      public
-
       def authorization(credit_card)
         post_request(self.authorization_request(credit_card))
       end
