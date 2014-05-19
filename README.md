@@ -14,9 +14,6 @@ ActivePayment
 
 ActivePayment is an abstraction layer for different Payment-Interfaces (XML, JSON)
 
-Usage
------------------
-
 ``` ruby
   ActivePayment::Payone::Gateway.config = {:mid => 123456, :portalid => 1234, :key => 'test', :mode => 'test'}
 
