@@ -6,6 +6,11 @@ ActivePayment
 [![Code Climate](http://img.shields.io/codeclimate/github/aklaiber/activepayment.svg)][codeclimate]
 [![Dependencies Status](http://img.shields.io/gemnasium/aklaiber/activepayment.svg)][gemnasium]
 
+[travis]: https://travis-ci.org/aklaiber/activepayment
+[gem]: https://rubygems.org/gems/activepayment
+[codeclimate]: https://codeclimate.com/github/aklaiber/activepayment
+[gemnasium]: https://gemnasium.com/aklaiber/activepayment
+
 
 ActivePayment is an abstraction layer for different Payment-Interfaces (XML, JSON)
 
