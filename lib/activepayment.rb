@@ -14,10 +14,8 @@ require "activepayment/railtie" if defined?(Rails)
 require "activepayment/version"
 require "activepayment/gateway_base"
 
-require "activepayment/payone/gateway"
 require "activepayment/wirecard/gateway"
 
-require "activepayment/payone/response"
 require "activepayment/wirecard/response"
 
 module ActivePayment

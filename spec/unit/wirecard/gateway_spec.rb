@@ -3,8 +3,16 @@ require 'spec_helper'
 describe ActivePayment::Wirecard::Gateway do
 
   let(:amount) { 100 }
-  let(:gateway) { ActivePayment::Wirecard::Gateway.new(123, amount) }
   let(:guwid) { 'C822580121385121429927' }
+  let(:gateway) do
+    gateway = ActivePayment::Wirecard::Gateway.new(123, amount)
+    gateway.jop_id = 'test dummy data'
+    gateway.transaction_params = {
+        :commerce_type => 'eCommerce',
+        :country_code => 'DE'
+    }
+    gateway
+  end
 
   before(:all) do
     ActivePayment::Wirecard::Gateway.login = 56501
@@ -12,12 +20,6 @@ describe ActivePayment::Wirecard::Gateway do
     ActivePayment::Wirecard::Gateway.signature = "56501"
     ActivePayment::Wirecard::Gateway.mode = "demo"
     ActivePayment::Wirecard::Gateway.default_currency = 'EUR'
-
-    gateway.jop_id = 'test dummy data'
-    gateway.transaction_params = {
-        :commerce_type => 'eCommerce',
-        :country_code => 'DE'
-    }
   end
 
   it "should build authorization request" do
@@ -51,7 +53,9 @@ describe ActivePayment::Wirecard::Gateway do
   end
 
   describe "with address" do
-    before(:all) do
+    let(:gateway) do
+      gateway = ActivePayment::Wirecard::Gateway.new(123, amount)
+      gateway.jop_id = 'test dummy data'
       gateway.transaction_params = {
           :commerce_type => 'eCommerce',
           :country_code => 'DE',
@@ -71,6 +75,7 @@ describe ActivePayment::Wirecard::Gateway do
               }
           }
       }
+      gateway
     end
 
     it "should build authorization request" do

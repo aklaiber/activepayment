@@ -3,18 +3,20 @@ require "spec_helper"
 describe ActivePayment::Wirecard::Gateway do
 
   let(:amount) { 100 }
-  let(:gateway) { ActivePayment::Wirecard::Gateway.new(123, amount) }
+  let(:gateway) do
+    gateway = ActivePayment::Wirecard::Gateway.new(123, amount)
+    gateway.jop_id = 'test dummy data'
+    gateway.transaction_params = {
+        :commerce_type => 'eCommerce',
+        :country_code => 'DE'
+    }
+    gateway
+  end
 
   describe "post request" do
 
     before(:all) do
       ActivePayment::Wirecard::Gateway.config = load_config('wirecard', 'without_3d_secure')
-
-      gateway.jop_id = 'test dummy data'
-      gateway.transaction_params = {
-          :commerce_type => 'eCommerce',
-          :country_code => 'DE'
-      }
     end
 
     it "should post authorization request" do
@@ -49,7 +51,9 @@ describe ActivePayment::Wirecard::Gateway do
     end
 
     describe "with address" do
-      before(:all) do
+      let(:gateway) do
+        gateway = ActivePayment::Wirecard::Gateway.new(123, amount)
+        gateway.jop_id = 'test dummy data'
         gateway.transaction_params = {
             :commerce_type => 'eCommerce',
             :country_code => 'DE',
@@ -69,6 +73,7 @@ describe ActivePayment::Wirecard::Gateway do
                 }
             }
         }
+        gateway
       end
 
       it "should post authorization request with address" do
@@ -84,15 +89,8 @@ describe ActivePayment::Wirecard::Gateway do
   end
 
   describe "3D secure" do
-
     before(:all) do
       ActivePayment::Wirecard::Gateway.config = load_config('wirecard', 'with_3d_secure')
-
-      gateway.jop_id = 'test dummy data'
-      gateway.transaction_params = {
-          :commerce_type => 'eCommerce',
-          :country_code => 'DE'
-      }
     end
 
     context "enrollment_check" do
