@@ -18,7 +18,7 @@ module ActivePayment
         build_request(:authorization) do |xml|
           xml.tag! 'TransactionID', self.transaction_id
           xml.tag! 'Currency', Gateway.default_currency
-          xml.tag! 'Amount', self.amount
+          xml.tag! 'Amount', self.amount.cents
 
           add_optional_node(xml, :commerce_type)
           add_optional_node(xml, :country_code)
@@ -36,7 +36,7 @@ module ActivePayment
         build_request(:capture_authorization) do |xml|
           xml.tag! 'TransactionID', self.transaction_id
           xml.tag! 'GuWID', guwid
-          xml.tag! 'Amount', self.amount
+          xml.tag! 'Amount', self.amount.cents
 
           add_optional_node(xml, :country_code)
         end
@@ -50,7 +50,7 @@ module ActivePayment
         build_request(:purchase) do |xml|
           xml.tag! 'TransactionID', self.transaction_id
           xml.tag! 'Currency', Gateway.default_currency
-          xml.tag! 'Amount', self.amount
+          xml.tag! 'Amount', self.amount.cents
           xml.tag! 'GuWID', guwid unless guwid.blank?
           xml.tag! 'THREE-D_SECURE' do
             xml.tag! 'PARes', pares
@@ -72,7 +72,7 @@ module ActivePayment
         build_request(:enrollment_check) do |xml|
           xml.tag! 'TransactionID', self.transaction_id
           xml.tag! 'Currency', Gateway.default_currency
-          xml.tag! 'Amount', self.amount
+          xml.tag! 'Amount', self.amount.cents
 
           add_optional_node(xml, :country_code)
           add_optional_node(xml, :credit_card_data, credit_card)

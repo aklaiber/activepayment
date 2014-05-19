@@ -8,7 +8,7 @@ module ActivePayment
 
       def initialize(transaction_id, amount)
         @transaction_id = transaction_id
-        @amount = Money.new(amount, default_currency.upcase)
+        @amount = amount.kind_of?(Money) ? amount : Money.new(amount, default_currency.upcase)
       end
 
       def self.build(name)
