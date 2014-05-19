@@ -14,17 +14,27 @@ ActivePayment
 
 ActivePayment is an abstraction layer for different Payment-Interfaces (XML, JSON)
 
+##### Usage Paypal Gateway 
+
 ``` ruby
-  ActivePayment::Payone::Gateway.config = {:mid => 123456, :portalid => 1234, :key => 'test', :mode => 'test'}
+    ActivePayment::Paypal::Gateway.business = 'seller_111111_biz@example.com'
+    ActivePayment::Paypal::Gateway.cmd = '_xclick'
+    ActivePayment::Paypal::Gateway.default_currency = 'EUR'
+```
 
-  gateway = ActivePayment::Payone::Gateway.new
+``` ruby
+  gateway = ActivePayment::Paypal::Gateway.new('TRANSACTION ID', 100)
+  
+  gateway.mode = 'live'
+  gateway.return_url = 'http://example.com/payment_completed_url'
+  gateway.notify_url = 'http://example.com/payment_notify_url'
+  gateway.cancel_url = 'http://example.com/payment_cancel_url'
+  gateway.invoice = 'INVOICE NUMBER'
+  gateway.item_name = 'ITEM NAME'
 
-  gateway.authorization
-  gateway.createaccess
-  gateway.updateuser(:userid => 123)
-  gateway.updateaccess(:accessid => 123, :action => 'update')
-  gateway.threedscheck(:cardpan => "4111111111111111", :exiturl => "http://www.example.com")
-  gateway.updatereminder(:txid  => 123, :reminderlevel => 2)
+  gateway.redirect_url.to_s 
+  
+  # => https://www.paypal.com/cgi-bin/webscr?amount=1.0&business=seller_111111_biz%40example.com&cancel_return=http%3A%2F%2Fexample.com%2Fpayment_cancel_url&cmd=_xclick&currency_code=EUR&invoice=INVOICE+NUMBER&item_name=ITEM+NAME&notify_url=http%3A%2F%2Fexample.com%2Fpayment_notify_url&return=http%3A%2F%2Fexample.com%2Fpayment_completed_url
 ```
 
 Installation
