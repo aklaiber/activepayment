@@ -16,9 +16,9 @@ describe ActivePayment::Wirecard::Gateway do
 
   before(:all) do
     ActivePayment::Wirecard::Gateway.login = 56501
-    ActivePayment::Wirecard::Gateway.password = "TestXAPTER"
-    ActivePayment::Wirecard::Gateway.signature = "56501"
-    ActivePayment::Wirecard::Gateway.mode = "demo"
+    ActivePayment::Wirecard::Gateway.password = 'TestXAPTER'
+    ActivePayment::Wirecard::Gateway.signature = '56501'
+    ActivePayment::Wirecard::Gateway.mode = 'demo'
     ActivePayment::Wirecard::Gateway.default_currency = 'EUR'
   end
 

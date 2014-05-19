@@ -6,10 +6,7 @@ describe ActivePayment::Wirecard::Gateway do
   let(:gateway) do
     gateway = ActivePayment::Wirecard::Gateway.new(123, amount)
     gateway.jop_id = 'test dummy data'
-    gateway.transaction_params = {
-        :commerce_type => 'eCommerce',
-        :country_code => 'DE'
-    }
+    gateway.transaction_params = { commerce_type: 'eCommerce', country_code: 'DE' }
     gateway
   end
 
@@ -20,7 +17,8 @@ describe ActivePayment::Wirecard::Gateway do
     end
 
     it "should post authorization request" do
-      response = gateway.authorization(credit_card_hash)
+      response = gateway.authorization(credit_card_number: '4200000000000000', cvc2: '001', expiration_year: '2020', expiration_month: '01', card_holder_name: 'TEST CARDHOLDER')
+      # response = gateway.authorization(credit_card_hash)
 
       response.successful?.should be_true
       response.info.should include('THIS IS A DEMO')
@@ -55,21 +53,21 @@ describe ActivePayment::Wirecard::Gateway do
         gateway = ActivePayment::Wirecard::Gateway.new(123, amount)
         gateway.jop_id = 'test dummy data'
         gateway.transaction_params = {
-            :commerce_type => 'eCommerce',
-            :country_code => 'DE',
-            :contact_data => {:ip_address => '192.168.1.1'},
-            :corptrustcenter_data => {
-                :address => {
-                    :first_name => Forgery::Name.first_name,
-                    :last_name => Forgery::Name.last_name,
-                    :address_1 => '550 South Winchester blvd.',
-                    :address_2 => 'P.O. Box 850',
-                    :city => 'San Jose',
-                    :zip_code => '95128',
-                    :state => 'CA',
-                    :country => 'US',
-                    :phone => '+1(202)555-1234',
-                    :email => 'John.Doe@email.com'
+            commerce_type: 'eCommerce',
+            country_code: 'DE',
+            contact_data: {ip_address: '192.168.1.1'},
+            corptrustcenter_data: {
+                address: {
+                    first_name: Forgery::Name.first_name,
+                    last_name: Forgery::Name.last_name,
+                    address_1: '550 South Winchester blvd.',
+                    address_2: 'P.O. Box 850',
+                    city: 'San Jose',
+                    zip_code: '95128',
+                    state: 'CA',
+                    country: 'US',
+                    phone: '+1(202)555-1234',
+                    email: 'John.Doe@email.com'
                 }
             }
         }

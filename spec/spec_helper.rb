@@ -14,11 +14,11 @@ end
 
 def credit_card_hash(number = '4200000000000000', options = {})
   {
-      :credit_card_number => number,
-      :cvc2 => '001',
-      :expiration_year => Time.now.year + 1,
-      :expiration_month => '01',
-      :card_holder_name => Forgery::Name.full_name
+      credit_card_number: number,
+      cvc2: '001',
+      expiration_year: Time.now.year + 1,
+      expiration_month: '01',
+      card_holder_name: Forgery::Name.full_name
   }.update(options)
 end
 
