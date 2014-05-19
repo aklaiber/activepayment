@@ -3,7 +3,7 @@ ActivePayment
 
 [![Build Status](https://api.travis-ci.org/aklaiber/activepayment.svg)][travis]
 [![Gem Version](http://img.shields.io/gem/v/activepayment.svg)][gem]
-[![Code Climate](http://img.shields.io/codeclimate/github/aklaiber/activepayment.svg)][codeclimate]
+[![Code Climate](https://codeclimate.com/github/aklaiber/activepayment.png)][codeclimate]
 [![Dependencies Status](http://img.shields.io/gemnasium/aklaiber/activepayment.svg)][gemnasium]
 
 [travis]: https://travis-ci.org/aklaiber/activepayment
