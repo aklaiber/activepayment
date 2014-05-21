@@ -1,24 +1,25 @@
-require "bundler/setup"
+require 'bundler/setup'
 
 require 'uri'
 require 'net/http'
 require 'net/https'
 require 'digest/md5'
 
-require "active_support/core_ext"
-require "builder"
-require "nokogiri"
-require "uuid"
-require "money"
+require 'active_support'
+require 'active_support/core_ext'
+require 'builder'
+require 'nokogiri'
+require 'uuid'
+require 'money'
 
-require "activepayment/railtie" if defined?(Rails)
-require "activepayment/version"
-require "activepayment/gateway_base"
+require 'activepayment/railtie' if defined?(Rails)
+require 'activepayment/version'
+require 'activepayment/gateway_base'
 
-require "activepayment/wirecard/gateway"
-require "activepayment/paypal/gateway"
+require 'activepayment/wirecard/gateway'
+require 'activepayment/paypal/gateway'
 
-require "activepayment/wirecard/response"
+require 'activepayment/wirecard/response'
 
 module ActivePayment
   class Exception < RuntimeError
