@@ -57,13 +57,13 @@ describe ActivePayment::Paypal::Gateway do
     it 'returns VERIFIED' do
       expect(gateway).to receive(:post_validation_request).once.and_return('VERIFIED')
 
-      expect(gateway.purchase_valid?('TEST REQUEST')).to be_true
+      expect(gateway.purchase_valid?('TEST REQUEST')).to be true
     end
 
     it 'returns INVALID' do
       expect(gateway).to receive(:post_validation_request).once.and_return('INVALID')
 
-      expect(gateway.purchase_valid?('TEST REQUEST')).to be_false
+      expect(gateway.purchase_valid?('TEST REQUEST')).to be false
     end
   end
 end

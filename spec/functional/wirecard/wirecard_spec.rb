@@ -18,9 +18,8 @@ describe ActivePayment::Wirecard::Gateway do
 
     it "should post authorization request" do
       response = gateway.authorization(credit_card_number: '4200000000000000', cvc2: '001', expiration_year: '2020', expiration_month: '01', card_holder_name: 'TEST CARDHOLDER')
-      # response = gateway.authorization(credit_card_hash)
 
-      response.successful?.should be_true
+      response.successful?.should be true
       response.info.should include('THIS IS A DEMO')
       response.status_type.should eql('INFO')
       response.authorization_code.should_not be_blank
@@ -31,7 +30,7 @@ describe ActivePayment::Wirecard::Gateway do
       guwid = gateway.authorization(credit_card_hash)['GuWID']
       response = gateway.capture_authorization(guwid)
 
-      response.successful?.should be_true
+      response.successful?.should be true
       response.info.should include('THIS IS A DEMO')
       response.status_type.should eql('INFO')
       response.authorization_code.should_not be_blank
@@ -41,7 +40,7 @@ describe ActivePayment::Wirecard::Gateway do
     it "should post purchase request" do
       response = gateway.purchase(credit_card_hash)
 
-      response.successful?.should be_true
+      response.successful?.should be true
       response.info.should include('THIS IS A DEMO')
       response.status_type.should eql('INFO')
       response.authorization_code.should_not be_blank
@@ -77,7 +76,7 @@ describe ActivePayment::Wirecard::Gateway do
       it "should post authorization request with address" do
         response = gateway.authorization(credit_card_hash)
 
-        response.successful?.should be_true
+        response.successful?.should be true
         response.info.should include('THIS IS A DEMO')
         response.status_type.should eql('INFO')
         response.authorization_code.should_not be_blank
@@ -95,7 +94,7 @@ describe ActivePayment::Wirecard::Gateway do
       it "should failed" do
         response = gateway.enrollment_check(credit_card_hash('4012000300001003', :cvc2 => '003'))
 
-        response.successful?.should be_false
+        response.successful?.should be false
       end
     end
   end

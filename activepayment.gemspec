@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency "uuid"
   s.add_dependency "money"
 
-  s.add_development_dependency "rspec"
+  s.add_development_dependency "rspec", "~> 3.0.0"
   s.add_development_dependency "rake"
   s.add_development_dependency "forgery"
 end
